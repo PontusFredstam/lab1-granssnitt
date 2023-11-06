@@ -1,0 +1,54 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+h1,h2,h3,h4 {
+    text-align:center;
+}
+
+.allergies{
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+#gluten, #lactose {
+    color: red;
+}
+
+#burgerselection {
+    background-color: black;
+    color: white;
+}
+
+button {
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: rgb(12, 201, 12);
+ }
+
+header, section {
+    margin: 5px 10px;
+}
+
+section {
+    border-style:dashed;
+    border-radius: 20px;
+    }
+section > p, form {
+    margin-left: 15px;
+}
+
+div {
+    padding: 5px;
+    margin: 50px;
+}
+
+#headpic {
+    opacity: 0.8;
+}
+
+header {
+    height: 500px;
+    overflow:hidden;
+}
