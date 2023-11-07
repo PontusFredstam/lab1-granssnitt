@@ -48,6 +48,12 @@ header {
     overflow:hidden;
 }
 
+h1 {
+    width: 97%;
+    text-align: center;
+    margin-top:-40%;
+}
+
 .menu {
     background-color: black;
     color: white;
