@@ -1,0 +1,22 @@
+[{
+    "name": "BBQ Burger",
+    "kCal": 650,
+    "lactose": true,
+    "gluten": true,
+    "img": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg"
+  },
+  {
+    "name": "Meat Lover",
+    "kCal": 2500,
+    "lactose":true,
+    "gluten": true,
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfbgZdQMbfIP2v7MWpYKDn2kMIUsVzlw8rg&usqp=CAU"
+  },
+  {
+    "name": "Vegan Heaven",
+    "kCal": 0,
+    "lactose": false,
+    "gluten": false,
+    "img":"https://www.inspiredtaste.net/wp-content/uploads/2018/05/Homemade-Mushroom-Veggie-Burger-Recipe-1200.jpg"
+  }
+]
