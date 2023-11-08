@@ -16,53 +16,22 @@
             Menu
         </h2>
         <div class="wrapper">
-        <div class="item">
-    <h3> 
-        BBQ Burger
-    </h3>
-    <img src="https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg" alt="Span" title="BBQ Burger" style="width: 200px;">
-    <br> 
-    <h4>
-        Contains:
-    </h4>
-    <ul>
-        <li> <span class="allergies">Gluten </span> </li>
-        <li> <span class="allergies">Lactose </span> </li>
-        <li> A lot of fat </li>
-    </ul>  
-    </div>
-
-    <div class="item">
-        <h3> 
-            Meat Lover
-        </h3>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfbgZdQMbfIP2v7MWpYKDn2kMIUsVzlw8rg&usqp=CAU" alt="Span" title="Meat Lover" style="width: 200px;">
-        <br> 
-        <h4>
-            Contains:
-        </h4>
-        <ul>
-            <li> Meat </li>
-            <li> Chicken  </li>
-            <li> Bacon </li>
-        </ul>   
-        </div>
-
-        <div class="item">
-            <h3> 
-                Vegan heaven
-            </h3>
-            <img src="https://www.inspiredtaste.net/wp-content/uploads/2018/05/Homemade-Mushroom-Veggie-Burger-Recipe-1200.jpg" alt="Span" title="Vegan Burger" style="width: 200px;">
-            <br> 
-            <h4>
-                Contains:
-            </h4>
-            <ul>
-                <li> <span class="allergies">Gluten </span></li>
-                <li> Leafs </li>
-                <li> 0 Kcal  </li>
-            </ul>      
+          <div class="box" v-for="burger in burgers" :key="burger.name">
+            <h3>{{ burger.name }}</h3>
+            <div class="image-container">
+              <img :src="burger.imageUrl" alt="Burger Image" class="image" style="width: 200px;">
             </div>
+            <br>
+            <h4 id="contains">Contains:</h4>
+            <ul>
+              <li v-if="burger.containsGluten">
+                <span v-if="burger.containsGluten" class="allergies">Gluten</span></li><br>
+              <li v-if="burger.containsLactose">
+                <span v-if="burger.containsLactose" class="allergies">Lactose</span>
+              </li>
+              <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
+            </ul>
+          </div>
         </div>
     </section>
 
@@ -124,12 +93,6 @@
         <code> Copyright procteced (footer) </code>
     </footer>
   <div>
-    <div>
-      <h1>Burgers</h1>
-      <Burger v-for="burger in burgers"
-              v-bind:burger="burger" 
-              v-bind:key="burger.name"/>
-    </div>
     <div id="map" v-on:click="addOrder">
       click here
     </div>
@@ -199,6 +162,7 @@ body {
 }
 
 button {
+    background-color: lightgray;
     margin: 10px 15px;
     text-align: center;
     border-style:hidden;
@@ -251,8 +215,8 @@ h1 {
     color: white;
 }
 
-.item {
-    margin: 50px;
+.box {
+    margin: 10px;
 }
 
 .wrapper {
@@ -260,14 +224,31 @@ h1 {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.image {
+#contains {
+  text-align: center;
+}
+
+.image-container {
+  margin:0px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.image-container > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
 
-  #map {
+header > .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#map {
     width: 300px;
     height: 300px;
     background-color: red;
