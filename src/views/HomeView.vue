@@ -241,9 +241,9 @@ header {
 }
 
 h1 {
-    width: 97%;
+    width: 88%;
     text-align: center;
-    margin-top:-40%;
+    margin-top:-37%;
 }
 
 .menu {
