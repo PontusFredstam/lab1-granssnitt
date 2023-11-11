@@ -16,7 +16,7 @@
             Menu
         </h2>
         <div class="wrapper">
-          <div class="box" v-for="burger in burgers" :key="burger.name">
+          <div class="box" v-for="burger in menu" :key="burger.name">
             <h3>{{ burger.name }}</h3>
             <div class="image-container">
               <img :src="burger.imageUrl" alt="Burger Image" class="image" style="width: 200px;">
@@ -31,6 +31,13 @@
               </li>
               <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
             </ul>
+            <p>Amount: {{amountOrdered}}</p>
+            <button type="add" v-on:click="addBurger" style="box-sizing: 25px;">
+              +
+            </button>
+            <button type="remove" v-on:click="removeBurger" style="box-sizing: 25px;">
+              -
+            </button>
           </div>
         </div>
     </section>
@@ -39,51 +46,41 @@
     <h3> 
         Customer information
     </h3>
-    <p>
-        <label for="name"> Full name</label><br>
-        <input type="text" id="name" name="fn" required="required" placeholder="First- and Last name">
-    </p>
-    <p>
-        <label for="email"> E-mail</label><br>
-        <input type="email" id="email" name="em" required="required" placeholder="Email Adress">
-    </p>
-    <p>
-        <label for="street"> Street</label><br>
-        <input type="text" id="street" name="Street" required="required" placeholder="Street Name">
-    </p>
-    <p>
-        <label for="houseNumber"> House</label><br>
-        <input type="number" id="houseNumber" name="houseNumber" required="required" placeholder="House number">
-    </p>
-    <p>
-        <label for="payment"> Payment</label><br>
-        <select id="payment" name="payment">
-            <option selected> Swish</option>
-            <option> Card payment</option>
-            <option> Cash</option>
-            <option> Klarna</option>
-        </select>
-    </p>
-    <form>
-        <h4>
-            Gender:
-        </h4>
-        <label>
-            <input type="radio" name="gender" value="male">
-            Male
-        </label><br>
-        <label>
-            <input type="radio" name="gender" value="female">
-            Female
-        </label><br>
-        <label>
-            <input type="radio" name="gender" value="Do not wish to provide" checked>
-            Do not wish to provide
-        </label>
-    </form>
+    <div>
+    <p>Full name {{ fullName }}</p>
+    <input v-model="fullName" placeholder="First- and Last name"/> 
+        
+    <p>E-mail {{ email }}</p>
+    <input v-model="email" placeholder="Email Address"/>
+
+    <p>Street {{ street }}</p>
+    <input v-model="street" placeholder="Street name"/>
+
+    <p>House {{ house }}</p>
+    <input v-model="house" type="number" placeholder="House number"/>
+
+    <p>Payment {{ paymentMethod }}</p>
+    <select v-model="paymentMethod">
+      <option>Card</option>
+      <option selected>Swish</option>
+      <option>Klarna</option>
+      <option>Cash</option>
+    </select>
+
+    <p>Gender {{ gender }}</p>
+    <input type="radio" id="male" value="Male" v-model="gender" />
+    <label for="male">Male</label>
+    <br>
+    <input type="radio" id="female" value="Female" v-model="gender" />
+    <label for="female">Female</label>
+    <br>
+    <input type="radio" id="other" value="Do not want to disclose" v-model="gender" />
+    <label for="other">Do not want to disclose</label>
+  </div>
+
     </section>
 
-    <button type="submit"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/221a2a78-3338-44c0-b21a-3f2a66d031ae/d7kn14u-6bfbf8dd-15a1-4cc5-8b4b-aa5fca06fa97.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIyMWEyYTc4LTMzMzgtNDRjMC1iMjFhLTNmMmE2NmQwMzFhZVwvZDdrbjE0dS02YmZiZjhkZC0xNWExLTRjYzUtOGI0Yi1hYTVmY2EwNmZhOTcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8XfI0kd52tXCECHEl3OaUozYb5XpAEhc2HlbMnSkt8g" style="width: 25px;">
+    <button type="submit" v-on:click="submitOrder"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/221a2a78-3338-44c0-b21a-3f2a66d031ae/d7kn14u-6bfbf8dd-15a1-4cc5-8b4b-aa5fca06fa97.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIyMWEyYTc4LTMzMzgtNDRjMC1iMjFhLTNmMmE2NmQwMzFhZVwvZDdrbjE0dS02YmZiZjhkZC0xNWExLTRjYzUtOGI0Yi1hYTVmY2EwNmZhOTcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8XfI0kd52tXCECHEl3OaUozYb5XpAEhc2HlbMnSkt8g" style="width: 25px;">
         Send Order
     </button>
     
@@ -100,6 +97,7 @@
 </template>
 
 <script>
+import menu from '../assets/menu.json'
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 
@@ -114,27 +112,35 @@ function MenuItem(name, imageUrl, kCal, containsGluten, containsLactose) {
     this.containsLactose = containsLactose;
 }
 
-  const burgerArray = [];
-  
-  const BBQBurger = new MenuItem("BBQ Burger", "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg", 650, true, true );
-  const meatLover = new MenuItem("Meat Lover", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfbgZdQMbfIP2v7MWpYKDn2kMIUsVzlw8rg&usqp=CAU", 2500, true, true );
-  const veganHeaven = new MenuItem("Vegan Heaven", "https://www.inspiredtaste.net/wp-content/uploads/2018/05/Homemade-Mushroom-Veggie-Burger-Recipe-1200.jpg", 0, false, false);
-
-  burgerArray.push(BBQBurger, meatLover, veganHeaven);
-  console.log(burgerArray);
-
 export default {
   name: 'HomeView',
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     Burger
   },
   data: function () {
     return {
-      burgers:burgerArray
+      picked: 'Do not want to disclose',
+      selected: "Swish",
+      menu,
+      amountOrdered: 0,
     }
   },
 
   methods: {
+    addBurger: function(){
+      this.amountOrdered += 1
+    },
+    removeBurger: function(){
+      this.amountOrdered -= 1
+    },
+    submitOrder: function() {
+      console.log('Name:', this.fullName);
+      console.log('Email:', this.email);
+      console.log('Address:', this.street + ' ' + this.house);
+      console.log('Payment Method:', this.paymentMethod);
+      console.log('Gender:', this.gender);
+    },
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
