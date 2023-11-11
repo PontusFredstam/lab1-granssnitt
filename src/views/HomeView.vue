@@ -31,13 +31,15 @@
               </li>
               <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
             </ul>
-            <p>Amount: {{amountOrdered}}</p>
-            <button type="add" v-on:click="addBurger" style="box-sizing: 25px;">
+          
+            <p>Amount: {{ burger.amountOrdered }}</p>
+            <button type="add" v-on:click="addBurger(burger)" style="box-sizing: 25px;">
               +
             </button>
-            <button type="remove" v-on:click="removeBurger" style="box-sizing: 25px;">
+            <button type="remove" v-on:click="removeBurger(burger)" style="box-sizing: 25px;">
               -
             </button>
+          
           </div>
         </div>
     </section>
@@ -128,11 +130,13 @@ export default {
   },
 
   methods: {
-    addBurger: function(){
-      this.amountOrdered += 1
+    addBurger: function(burger){
+      burger.amountOrdered += 1
     },
-    removeBurger: function(){
-      this.amountOrdered -= 1
+    removeBurger: function(burger){
+      if (burger.amountOrdered > 0) {
+        burger.amountOrdered -= 1
+      }
     },
     submitOrder: function() {
       console.log('Name:', this.fullName);
