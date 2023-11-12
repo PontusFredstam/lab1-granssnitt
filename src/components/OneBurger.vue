@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <h3>{{ burger.name }}</h3>
-    <img :src="burger.img" alt="Burger Image" title="burger.name" style="width: 200px;">
+    <img v-bind:src="burger.img" alt="Burger Image" title="burger.name" style="width: 200px;">
     <br> 
     <h4>
         Contains:
@@ -22,6 +22,11 @@
     name: 'OneBurger',
     props: {
       burger: Object
+    },
+    data: function() {
+      return {
+        amountOrdered:0,
+      }
     }
   }
   </script>

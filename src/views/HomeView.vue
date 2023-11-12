@@ -31,20 +31,6 @@
               </li>
               <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
             </ul>
-            
-            <Burger
-            v-for="burger in Oneburger"
-            :burger="burger"
-            :key="burger.name"
-            @orderedBurgers = "addBurger"
-            />
-            <p>Amount: {{ burger.amountOrdered }}</p>
-            <button type="add" v-on:click="addBurger(burger)" style="box-sizing: 25px;">
-              +
-            </button>
-            <button type="remove" v-on:click="removeBurger(burger)" style="box-sizing: 25px;">
-              -
-            </button>
           
           </div>
         </div>
@@ -76,13 +62,13 @@
     </select>
 
     <p>Gender {{ gender }}</p>
-    <input type="radio" id="male" value="Male" v-model="gender" />
+    <input type="radio" id="male" name="gender" value="Male" v-model="gender" />
     <label for="male">Male</label>
     <br>
-    <input type="radio" id="female" value="Female" v-model="gender" />
+    <input type="radio" id="female" name="gender" value="Female" v-model="gender" />
     <label for="female">Female</label>
     <br>
-    <input type="radio" id="other" value="Do not want to disclose" v-model="gender" />
+    <input type="radio" id="other" name="gender" value="Do not want to disclose" v-model="gender"/>
     <label for="other">Do not want to disclose</label>
   </div>
 
@@ -115,10 +101,8 @@
 
 <script>
 import menu from '../assets/menu.json'
-import OneBurger from '../components/OneBurger.vue';
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
-import OneBurger from '../components/OneBurger.vue'
 
 const socket = io();
 
@@ -136,36 +120,17 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Burger,
-    OneBurger
 },
   data: function () {
     return {
-      showOrder: false,
-      orderSummary: null,
       orderedBurgers: {},
       picked: 'Do not want to disclose',
       selected: "Swish",
       menu,
-      amountOrdered: 0,
     }
   },
 
   methods: {
-    addBurger: function(burger){
-      burger.amountOrdered += 1
-      this.$emit('orderedBurgers', {
-        name: this.burger.name,
-        amount: this.amountOrdered})
-    }
-  ,
-    removeBurger: function(burger){
-      if (burger.amountOrdered > 0) {
-        burger.amountOrdered --;
-        this.$emit('orderedBurgers', {
-          name: this.burger.name,
-          amount: this.amountOrdered})
-      }
-    },
     submitOrder: function() {
       this.showOrder = true;
       console.log('Name:', this.fullName);
