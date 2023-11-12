@@ -40,25 +40,22 @@
     },
 
     methods: {
-      addBurger: function (burger) {
-      this.amountOrdered += 1;
+  addBurger: function () {
+    this.amountOrdered += 1;
+    this.$emit('orderedBurgers', {
+       name: this.burger.name,
+       amount: this.amountOrdered });
+  },
+
+  removeBurger: function () {
+    if (this.amountOrdered > 0) {
+      this.amountOrdered--;
       this.$emit('orderedBurgers', {
-        burger,
-        amount: this.amountOrdered,
-      });
-    },
-
-
-    removeBurger: function (burger) {
-      if (this.amountOrdered > 0) {
-        this.amountOrdered--;
-        this.$emit('orderedBurgers', {
-          burger,
-          amount: this.amountOrdered,
-        });
-      }
-    },
+         name: this.burger.name,
+         amount: this.amountOrdered });
     }
+  },
+  }
 
     
   }
