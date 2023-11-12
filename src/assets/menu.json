@@ -3,20 +3,23 @@
     "kCal": 650,
     "containsLactose": true,
     "containsGluten": true,
-    "imageUrl": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg"
+    "imageUrl": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg",
+    "amountOrdered": 0
   },
   {
     "name": "Meat Lover",
     "kCal": 2500,
     "containsLactose":true,
     "containsGluten": true,
-    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfbgZdQMbfIP2v7MWpYKDn2kMIUsVzlw8rg&usqp=CAU"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfbgZdQMbfIP2v7MWpYKDn2kMIUsVzlw8rg&usqp=CAU",
+    "amountOrdered": 0
   },
   {
     "name": "Vegan Heaven",
     "kCal": 0,
     "containsLactose": false,
     "containsGluten": false,
-    "imageUrl":"https://www.inspiredtaste.net/wp-content/uploads/2018/05/Homemade-Mushroom-Veggie-Burger-Recipe-1200.jpg"
+    "imageUrl":"https://www.inspiredtaste.net/wp-content/uploads/2018/05/Homemade-Mushroom-Veggie-Burger-Recipe-1200.jpg",
+    "amountOrdered": 0
   }
 ]

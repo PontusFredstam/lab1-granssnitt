@@ -31,13 +31,14 @@
               </li>
               <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
             </ul>
-            <p>Amount: {{amountOrdered}}</p>
-            <button type="add" v-on:click="addBurger" style="box-sizing: 25px;">
-              +
-            </button>
-            <button type="remove" v-on:click="removeBurger" style="box-sizing: 25px;">
-              -
-            </button>
+            
+            <OneBurger v-for="burger in menu"
+            v-bind:burger="burger"
+            v-bind:key="burger.name"
+            v-on:orderedBurgers="addBurger($event)"
+            ref="burgerComponent"
+             />
+          
           </div>
         </div>
     </section>
@@ -80,9 +81,14 @@
 
     </section>
 
-    <button type="submit" v-on:click="submitOrder"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/221a2a78-3338-44c0-b21a-3f2a66d031ae/d7kn14u-6bfbf8dd-15a1-4cc5-8b4b-aa5fca06fa97.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIyMWEyYTc4LTMzMzgtNDRjMC1iMjFhLTNmMmE2NmQwMzFhZVwvZDdrbjE0dS02YmZiZjhkZC0xNWExLTRjYzUtOGI0Yi1hYTVmY2EwNmZhOTcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8XfI0kd52tXCECHEl3OaUozYb5XpAEhc2HlbMnSkt8g" style="width: 25px;">
+    <button type="submit" v-on:click="submitOrder()"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/221a2a78-3338-44c0-b21a-3f2a66d031ae/d7kn14u-6bfbf8dd-15a1-4cc5-8b4b-aa5fca06fa97.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIyMWEyYTc4LTMzMzgtNDRjMC1iMjFhLTNmMmE2NmQwMzFhZVwvZDdrbjE0dS02YmZiZjhkZC0xNWExLTRjYzUtOGI0Yi1hYTVmY2EwNmZhOTcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8XfI0kd52tXCECHEl3OaUozYb5XpAEhc2HlbMnSkt8g" style="width: 25px;">
         Send Order
     </button>
+
+    <div>
+      <OneBurger :burgerObject="orderedBurgers" @buttonClicked="showOrder" />
+      
+   </div>
     
     </main> 
     <footer>
@@ -98,6 +104,7 @@
 
 <script>
 import menu from '../assets/menu.json'
+import OneBurger from '../components/OneBurger.vue';
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 
@@ -116,10 +123,20 @@ export default {
   name: 'HomeView',
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    Burger
-  },
+    Burger,
+    OneBurger,
+},
   data: function () {
     return {
+      fullName: '',
+      email: '',
+      street: '',
+      house: 0, 
+      paymentMethod: 'Swish', 
+      gender: '',
+      showOrder: false,
+      orderSummary: null,
+      orderedBurgers: {},
       picked: 'Do not want to disclose',
       selected: "Swish",
       menu,
@@ -128,12 +145,6 @@ export default {
   },
 
   methods: {
-    addBurger: function(){
-      this.amountOrdered += 1
-    },
-    removeBurger: function(){
-      this.amountOrdered -= 1
-    },
     submitOrder: function() {
       console.log('Name:', this.fullName);
       console.log('Email:', this.email);
@@ -153,7 +164,13 @@ export default {
                                 orderItems: ["Beans", "Curry"]
                               }
                  );
-    }
+    },
+    callAddBurger: function() {
+      this.$refs.burgerComponent.addBurger();
+    },
+    callRemoveBurger: function () {
+    this.$refs.burgerComponent.removeBurger();
+    },
   }
 }
 </script>
