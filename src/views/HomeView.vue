@@ -3,7 +3,7 @@
         <img src="https://tasteandflavors.com/wp-content/uploads/2018/11/taste-and-flavors-out-and-about-10-best-burgers-wide.jpg" alt="FancyBurgir" id="headpic">
         <h1 style="position: absolute;">
             Welcome to Burgers Online
-        </h1>
+        </h1> 
     </header>
 
     <main>
@@ -16,24 +16,9 @@
             Menu
         </h2>
         <div class="wrapper">
-          <div class="box" v-for="burger in menu" :key="burger.name">
-            <h3>{{ burger.name }}</h3>
-            <div class="image-container">
-              <img :src="burger.imageUrl" alt="Burger Image" class="image" style="width: 200px;">
-            </div>
-            <br>
-            <h4 id="contains">Contains:</h4>
-            <ul>
-              <li v-if="burger.containsGluten">
-                <span v-if="burger.containsGluten" class="allergies">Gluten</span></li><br>
-              <li v-if="burger.containsLactose">
-                <span v-if="burger.containsLactose" class="allergies">Lactose</span>
-              </li>
-              <li v-if="!burger.containsGluten & !burger.containsLactose">No allergens</li>
-            </ul>
-          
-          </div>
+            <Burger v-for="burger in menu" :key="burger.name" :burger="burger" />
         </div>
+  
     </section>
 
     <section id="customerInformation">
@@ -41,19 +26,19 @@
         Customer information
     </h3>
     <div>
-    <p>Full name {{ fullName }}</p>
+    <p>Full name</p>
     <input v-model="fullName" placeholder="First- and Last name"/> 
         
-    <p>E-mail {{ email }}</p>
+    <p>E-mail</p>
     <input v-model="email" placeholder="Email Address"/>
 
-    <p>Street {{ street }}</p>
+    <p>Street</p>
     <input v-model="street" placeholder="Street name"/>
 
-    <p>House {{ house }}</p>
+    <p>House</p>
     <input v-model="house" type="number" placeholder="House number"/>
 
-    <p>Payment {{ paymentMethod }}</p>
+    <p>Payment</p>
     <select v-model="paymentMethod">
       <option>Card</option>
       <option selected>Swish</option>
@@ -61,7 +46,7 @@
       <option>Cash</option>
     </select>
 
-    <p>Gender {{ gender }}</p>
+    <p>Gender</p>
     <input type="radio" id="male" name="gender" value="Male" v-model="gender" />
     <label for="male">Male</label>
     <br>
@@ -107,13 +92,13 @@ import io from 'socket.io-client'
 const socket = io();
 
 
-function MenuItem(name, imageUrl, kCal, containsGluten, containsLactose) {
-    this.name = name;
-    this.imageUrl = imageUrl;
-    this.kCal = kCal;
-    this.containsGluten = containsGluten;
-    this.containsLactose = containsLactose;
-}
+//function MenuItem(name, imageUrl, kCal, containsGluten, containsLactose) {
+    //this.name = name;
+    //this.imageUrl = imageUrl;
+    //this.kCal = kCal;
+    //this.containsGluten = containsGluten;
+    //this.containsLactose = containsLactose;
+//}
 
 export default {
   name: 'HomeView',
@@ -132,7 +117,6 @@ export default {
 
   methods: {
     submitOrder: function() {
-      this.showOrder = true;
       console.log('Name:', this.fullName);
       console.log('Email:', this.email);
       console.log('Address:', this.street + ' ' + this.house);

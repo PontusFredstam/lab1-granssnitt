@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <h3>{{ burger.name }}</h3>
-    <img v-bind:src="burger.img" alt="Burger Image" title="burger.name" style="width: 200px;">
+    <img v-bind:src="burger.imageUrl" alt="Burger Image" title="burger.name" style="width: 200px;">
     <br> 
     <h4>
         Contains:
@@ -12,7 +12,17 @@
         <li v-if="!burger.containsGluten && !burger.containsLactose"> No allergens </li>
     </ul>  
     <div>
-      {{ burger.name }} {{ burger.kCal }} kCal
+      {{ burger.kCal }} kCal
+
+      <p>Amount: {{ amountOrdered }}</p>
+      <div class="button-container">
+            <button type="add" v-on:click="addBurger(burger)" style="box-sizing: 25px;">
+              +
+            </button>
+            <button type="remove" v-on:click="removeBurger(burger)" style="box-sizing: 25px;">
+              -
+            </button>
+        </div>
     </div>
   </div>
 </template>
@@ -27,7 +37,30 @@
       return {
         amountOrdered:0,
       }
+    },
+
+    methods: {
+      addBurger: function (burger) {
+      this.amountOrdered += 1;
+      this.$emit('orderedBurgers', {
+        burger,
+        amount: this.amountOrdered,
+      });
+    },
+
+
+    removeBurger: function (burger) {
+      if (this.amountOrdered > 0) {
+        this.amountOrdered--;
+        this.$emit('orderedBurgers', {
+          burger,
+          amount: this.amountOrdered,
+        });
+      }
+    },
     }
+
+    
   }
   </script>
   
@@ -41,7 +74,11 @@
     font-weight: bold;
 }
 .box {
-    margin: 50px;
+    width: 100%;
+}
+.button-container{
+  display: flex;
+  justify-content: space-between;
 }
   </style>
   
