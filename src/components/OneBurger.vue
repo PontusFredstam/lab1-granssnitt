@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <h3>{{ burger.name }}</h3>
-    <img v-bind:src="burger.imageUrl" alt="Burger Image" title="burger.name" style="width: 200px;">
+    <img v-bind:src="burger.imageUrl" alt="Burger Image" title="Juicy Borgir" style="width: 200px;">
     <br> 
     <h4>
         Contains:
@@ -14,7 +14,7 @@
     <div>
       {{ burger.kCal }} kCal
 
-      <p>Amount: {{ amountOrdered }}</p>
+      <p> Amount: {{ amountOrdered }}</p>
       <div class="button-container">
             <button type="add" v-on:click="addBurger(burger)" style="box-sizing: 25px;">
               +

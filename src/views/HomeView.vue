@@ -34,12 +34,6 @@
         <p>E-mail</p>
         <input v-model="email" placeholder="Email Address" />
 
-        <p>Street</p>
-        <input v-model="street" placeholder="Street name" />
-
-        <p>House</p>
-        <input v-model="house" type="number" placeholder="House number" />
-
         <p>Payment</p>
         <select v-model="paymentMethod">
           <option>Card</option>
@@ -59,12 +53,14 @@
         <label for="other">Do not want to disclose</label>
       </div>
 
-      <div class="map-container">
+      <div class="delivary-location">
         <h3 id="setLocation">
           Set your location:
         </h3>
-        <div id="map" v-on:click="addOrder">
-          click here
+        <div id="map" v-on:click="setLocation" style="position:relative">
+          <div id="target" v-bind:style="{ position: 'absolute', left: location.x + 'px', top: location.y + 'px'}">
+            T
+          </div>
         </div>
       </div>
 
@@ -129,10 +125,19 @@ export default {
     submitOrder: function () {
       console.log('Name:', this.fullName);
       console.log('Email:', this.email);
-      console.log('Address:', this.street + ' ' + this.house);
       console.log('Payment Method:', this.paymentMethod);
       console.log('Gender:', this.gender);
       console.log('Ordered Burgers:', this.orderedBurgers);
+      socket.emit("addOrder", {
+        orderId: {
+          details: {
+            x: this.location.x,
+            y: this.location.y
+          },
+          orderItems: ["Beans", "Curry"]
+        }
+      }
+      );
     },
     getOrderNumber: function () {
       return Math.floor(Math.random() * 100000);
@@ -140,17 +145,32 @@ export default {
     addOrder: function (event) {
       var offset = {
         x: event.currentTarget.getBoundingClientRect().left,
-        y: event.currentTarget.getBoundingClientRect().top
+        y: event.currentTarget.getBoundingClientRect().top,
       };
+      this.location = {
+        x: event.clientX - 60 - offset.x,
+        y: event.clientY - 60 - offset.y,
+      };
+      console.log(this.location)
       socket.emit("addOrder", {
-        orderId: this.getOrderNumber(),
-        details: {
-          x: event.clientX - 10 - offset.x,
-          y: event.clientY - 10 - offset.y
-        },
-        orderItems: ["Beans", "Curry"]
+        orderId: {
+          details: {
+            location
+          },
+          orderItems: ["Beans", "Curry"]
+        }
       }
       );
+    },
+    setLocation: function(event){
+      var offset = {
+        x: event.currentTarget.getBoundingClientRect().left,
+        y: event.currentTarget.getBoundingClientRect().top,
+      };
+      this.location = {
+        x: event.clientX - 60 - offset.x,
+        y: event.clientY - 60 - offset.y,
+      };
     }
   }
 }
@@ -259,14 +279,18 @@ header>.image {
   height: 1778px;
   background: url("C:\Users\Pontus\Downloads\lab1-granssnitt\public\img\polacks.jpg");
   background-size: cover;
+  /*position: absolute;*/
 }
-.map-container{
+
+.map-container {
   width: 100%;
   height: 100%;
   overflow: scroll;
   position: relative;
+  
 }
-#setLocation{
+
+#setLocation {
   text-align: center;
 }
 </style>

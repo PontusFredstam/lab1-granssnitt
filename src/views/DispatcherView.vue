@@ -13,6 +13,7 @@
       </div>
     </div>
   </template>
+
   <script>
   import io from 'socket.io-client'
   const socket = io();
@@ -21,11 +22,11 @@
     name: 'DispatcherView',
     data: function () {
       return {
-        orders: null
+        orders: null,
       }
     },
     created: function () {
-      socket.on('currentQueue', data =>
+      socket.on('submitOrder', data =>
         this.orders = data.orders);
     },
     methods: {
@@ -35,6 +36,7 @@
     }
   }
   </script>
+
   <style>
   #orderList {
     top:1em;
