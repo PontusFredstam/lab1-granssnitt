@@ -103,10 +103,10 @@ export default {
   },
   data: function () {
     return {
-        fullName: '',
-        email: '',
-        gender: '',
-        paymentMethod: '',
+      fullName: '',
+      email: '',
+      gender: '',
+      paymentMethod: '',
       orderedBurgers: {},
       picked: 'Do not want to disclose',
       selected: "Swish",
