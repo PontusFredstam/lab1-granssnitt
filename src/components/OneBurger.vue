@@ -9,7 +9,7 @@
     <ul>
         <li v-if="burger.containsGluten"> <span class="allergies">Gluten </span> </li>
         <li v-if="burger.containsLactose"> <span class="allergies">Lactose </span> </li>
-        <li v-if="!burger.containsGluten && !burger.containsLactose"> No allergens </li>
+        <li v-if="!burger.containsGluten && !burger.containsLactose"><span class="allergies"> No allergens </span></li>
     </ul>  
     <div>
       {{ burger.kCal }} kCal

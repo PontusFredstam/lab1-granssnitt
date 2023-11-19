@@ -269,7 +269,7 @@ header>.image {
 #map {
   width: 1920px;
   height: 1078px;
-  background: url("C:\Users\Pontus\Downloads\lab1-granssnitt\public\img\polacks.jpg");
+  background: url("D:\Gränssnittsprogrammering\Codes\lab1-granssnitt\public\img\polacks.jpg");
   background-size: cover;
   /*position: absolute;*/
 }
