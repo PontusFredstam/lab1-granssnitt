@@ -2,31 +2,29 @@
   <header>
     <img
       src="https://tasteandflavors.com/wp-content/uploads/2018/11/taste-and-flavors-out-and-about-10-best-burgers-wide.jpg"
-      alt="FancyBurgir" id="headpic">
-    <h1 style="position: absolute;">
-      Welcome to Burgers Online
-    </h1>
+      alt="FancyBurgir"
+      id="headpic"
+    />
+    <h1 style="position: absolute">Welcome to Burgers Online</h1>
   </header>
 
   <main>
     <section class="menu">
-      <h2>
-        Select Your Burger
-      </h2>
+      <h2>Select Your Burger</h2>
       ###insert options and so forth
-      <h2>
-        Menu
-      </h2>
+      <h2>Menu</h2>
       <div class="wrapper">
-        <Burger v-for="burger in menu" :key="burger.name" :burger="burger" @orderedBurgers="addToOrder($event)" />
+        <Burger
+          v-for="burger in menu"
+          :key="burger.name"
+          :burger="burger"
+          @orderedBurgers="addToOrder($event)"
+        />
       </div>
-
     </section>
 
     <section id="customerInformation">
-      <h3>
-        Customer information
-      </h3>
+      <h3>Customer information</h3>
       <div>
         <p>Full name</p>
         <input v-model="fullName" placeholder="First- and Last name" />
@@ -43,49 +41,71 @@
         </select>
 
         <p>Gender</p>
-        <input type="radio" id="male" name="gender" value="Male" v-model="gender" />
+        <input
+          type="radio"
+          id="male"
+          name="gender"
+          value="Male"
+          v-model="gender"
+        />
         <label for="male">Male</label>
-        <br>
-        <input type="radio" id="female" name="gender" value="Female" v-model="gender" />
+        <br />
+        <input
+          type="radio"
+          id="female"
+          name="gender"
+          value="Female"
+          v-model="gender"
+        />
         <label for="female">Female</label>
-        <br>
-        <input type="radio" id="other" name="gender" value="Do not want to disclose" v-model="gender" />
+        <br />
+        <input
+          type="radio"
+          id="other"
+          name="gender"
+          value="Do not want to disclose"
+          v-model="gender"
+        />
         <label for="other">Do not want to disclose</label>
       </div>
 
       <div class="delivary-location">
-        <h3 id="setLocation">
-          Set your location:
-        </h3>
-        <div id="map" v-on:click="setLocation" style="position:relative">
-          <div id="target" v-bind:style="{ position: 'absolute', left: location.x + 'px', top: location.y + 'px' }">
+        <h3 id="setLocation">Set your location:</h3>
+        <div id="map" v-on:click="setLocation" style="position: relative">
+          <div
+            id="target"
+            v-bind:style="{
+              position: 'absolute',
+              left: location.x + 'px',
+              top: location.y + 'px',
+            }"
+          >
             T
           </div>
         </div>
       </div>
-
     </section>
 
-    <button type="submit" v-on:click="addOrder()"><img
+    <button type="submit" v-on:click="addOrder()">
+      <img
         src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/221a2a78-3338-44c0-b21a-3f2a66d031ae/d7kn14u-6bfbf8dd-15a1-4cc5-8b4b-aa5fca06fa97.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzIyMWEyYTc4LTMzMzgtNDRjMC1iMjFhLTNmMmE2NmQwMzFhZVwvZDdrbjE0dS02YmZiZjhkZC0xNWExLTRjYzUtOGI0Yi1hYTVmY2EwNmZhOTcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.8XfI0kd52tXCECHEl3OaUozYb5XpAEhc2HlbMnSkt8g"
-        style="width: 25px;">
+        style="width: 25px"
+      />
       Send Order
     </button>
-
   </main>
   <footer>
-    <hr>
+    <hr />
     <code> Copyright procteced (footer) </code>
   </footer>
 </template>
 
 <script>
-import menu from '../assets/menu.json'
-import Burger from '../components/OneBurger.vue'
-import io from 'socket.io-client'
+import menu from "../assets/menu.json";
+import Burger from "../components/OneBurger.vue";
+import io from "socket.io-client";
 
 const socket = io();
-
 
 //function MenuItem(name, imageUrl, kCal, containsGluten, containsLactose) {
 //this.name = name;
@@ -96,27 +116,27 @@ const socket = io();
 //}
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Burger,
   },
   data: function () {
     return {
-      fullName: '',
-      email: '',
-      gender: '',
-      paymentMethod: '',
+      fullName: "",
+      email: "",
+      gender: "",
+      paymentMethod: "",
       orderedBurgers: {},
-      picked: 'Do not want to disclose',
+      picked: "Do not want to disclose",
       selected: "Swish",
       menu,
       location: {
         x: 0,
-        y: 0
+        y: 0,
       },
       orderId: 0,
-    }
+    };
   },
 
   methods: {
@@ -124,13 +144,13 @@ export default {
       this.orderedBurgers[burger.name] = burger.amount;
     },
     addOrder: function () {
-      console.log('Name:', this.fullName);
-      console.log('Email:', this.email);
-      console.log('Payment Method:', this.paymentMethod);
-      console.log('Gender:', this.gender);
-      console.log('Ordered Burgers:', this.orderedBurgers);
-      console.log('Location:', this.location)
-      console.log('Order ID:', this.getOrderNumber());
+      console.log("Name:", this.fullName);
+      console.log("Email:", this.email);
+      console.log("Payment Method:", this.paymentMethod);
+      console.log("Gender:", this.gender);
+      console.log("Ordered Burgers:", this.orderedBurgers);
+      console.log("Location:", this.location);
+      console.log("Order ID:", this.getOrderNumber());
       socket.emit("addOrder", {
         orderId: this.getOrderNumber(),
 
@@ -144,11 +164,11 @@ export default {
         details: {
           location: {
             x: this.location.x,
-            y: this.location.y
+            y: this.location.y,
           },
 
-          orderItems: this.orderedBurgers
-        }
+          orderItems: this.orderedBurgers,
+        },
       });
     },
     getOrderNumber: function () {
@@ -164,13 +184,13 @@ export default {
         y: event.clientY - 60 - offset.y,
       };
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
 body {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .allergies {
@@ -201,7 +221,7 @@ section {
   border-radius: 20px;
 }
 
-section>p,
+section > p,
 form {
   margin-left: 15px;
 }
@@ -253,14 +273,13 @@ h1 {
   overflow: hidden;
 }
 
-.image-container>img {
+.image-container > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-
-header>.image {
+header > .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -269,7 +288,7 @@ header>.image {
 #map {
   width: 1920px;
   height: 1078px;
-  background: url("D:\Gränssnittsprogrammering\Codes\lab1-granssnitt\public\img\polacks.jpg");
+  background: url("../../public/img/polacks.jpg");
   background-size: cover;
   /*position: absolute;*/
 }
@@ -279,7 +298,6 @@ header>.image {
   height: 100%;
   overflow: scroll;
   position: relative;
-
 }
 
 #setLocation {
